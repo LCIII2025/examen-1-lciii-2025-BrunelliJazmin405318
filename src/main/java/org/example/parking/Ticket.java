@@ -27,6 +27,7 @@ public class Ticket {
     }
 
     public long calcularMinutos() {
+
         return Duration.between(horaEntrada, horaSalida).toMinutes();
     }
 
@@ -37,7 +38,26 @@ public class Ticket {
         // por ejemplo si estuvo 45 minutos se le tarifa por 60, si estuvo 80 minutos se le tarifa por 120 minutos, etc...
         // retornar el importe final
 
-        return 0;
+        if (horaSalida == null) return 0;
+
+        long minutos = calcularMinutos();
+        long horas = (minutos + 59) / 60;
+
+        double tarifaPorHora = 0;
+
+        switch (vehiculo.getTipo()) {
+            case AUTO:
+                tarifaPorHora = 100;
+                break;
+            case SUV:
+                tarifaPorHora = 130;
+                break;
+            case PICKUP:
+                tarifaPorHora = 180;
+                break;
+        }
+
+        return horas * tarifaPorHora;
     }
 
 }
